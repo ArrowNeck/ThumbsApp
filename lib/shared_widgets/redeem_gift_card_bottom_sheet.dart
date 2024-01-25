@@ -80,54 +80,61 @@ class _RedeemGiftCardBottomSheetState extends State<RedeemGiftCardBottomSheet> {
               ],
             ),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(12.h),
-            child: Image.asset(
-              widget.giftCard.imagePath,
-              height: 200.h,
-              width: 400.w,
-              fit: BoxFit.fill,
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.h),
+              child: Image.asset(
+                widget.giftCard.imagePath,
+                height: 200.h,
+                width: 400.w,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
           SizedBox(
             height: 8.h,
+            width: 430.w,
           ),
-          Container(
-            height: 40.h,
-            width: 400.w,
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 15.w),
-            decoration: BoxDecoration(
-                color: const Color(0xFFF5F6F7),
-                borderRadius: BorderRadius.circular(10.h)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Points Balance",
-                  style: TextStyle(
-                      fontSize: 13.fs,
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xFF15294B)),
-                ),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.center,
-                  child: Text(
-                    currentPointsBalance.toString(),
+            child: Container(
+              height: 40.h,
+              width: 400.w,
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              decoration: BoxDecoration(
+                  color: const Color(0xFFF5F6F7),
+                  borderRadius: BorderRadius.circular(10.h)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Points Balance",
                     style: TextStyle(
-                        fontSize: 15.fs,
-                        fontWeight: FontWeight.w700,
-                        color: const Color(0xFFB3005E)),
+                        fontSize: 13.fs,
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xFF15294B)),
                   ),
-                ),
-              ],
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.center,
+                    child: Text(
+                      currentPointsBalance.toString(),
+                      style: TextStyle(
+                          fontSize: 15.fs,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFFB3005E)),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 100.w),
+            padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 30.w),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildPlusMinusBottons(
                   type: 0,

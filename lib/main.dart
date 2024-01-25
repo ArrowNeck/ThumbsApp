@@ -1,9 +1,19 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thumbs_app/splash_screen.dart';
 
+// void main() {
+//   runApp(const ThumbsApp());
+// }
+
 void main() {
-  runApp(const ThumbsApp());
+  runApp(
+    DevicePreview(
+      enabled: false,
+      builder: (context) => const ThumbsApp(),
+    ),
+  );
 }
 
 class ThumbsApp extends StatelessWidget {
@@ -20,6 +30,9 @@ class ThumbsApp extends StatelessWidget {
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return MaterialApp(
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
           debugShowCheckedModeBanner: false,
           title: 'Thumbs App',
           // You can use the library anywhere in the app even in theme
