@@ -6,6 +6,7 @@ import 'package:thumbs_app/custom_extentions.dart';
 import 'package:thumbs_app/shared_widgets/apps_switch_bottom_sheet.dart';
 import 'package:thumbs_app/shared_widgets/create_post_bottom_sheet.dart';
 import 'package:thumbs_app/ui/home_screen/home_screen.dart';
+import 'package:thumbs_app/ui/notification/notification_screen.dart';
 import 'package:thumbs_app/ui/perks_screen/perk_screen.dart';
 import 'package:thumbs_app/ui/profile_screen/profile_screen.dart';
 import 'package:thumbs_app/ui/rankings_screen/rankings_screen.dart';
@@ -88,32 +89,40 @@ class _BaseNavbarState extends State<BaseNavbar> {
                     SizedBox(
                       width: 12.w,
                     ),
-                    Stack(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              color: const Color(0xFFF5F6F7),
-                              borderRadius: BorderRadius.circular(25.h)),
-                          height: 50.h,
-                          width: 50.h,
-                          child: SvgPicture.asset(
-                            "assets/icons/notification_icon.svg",
-                            width: 25.h,
-                            height: 25.h,
-                          ),
-                        ),
-                        Positioned(
-                          right: 5.w,
-                          child: Container(
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const Notifications()));
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
-                                color: const Color(0xFFF9472F),
-                                borderRadius: BorderRadius.circular(6.25.h)),
-                            height: 12.5.h,
-                            width: 12.5.h,
+                                color: const Color(0xFFF5F6F7),
+                                borderRadius: BorderRadius.circular(25.h)),
+                            height: 50.h,
+                            width: 50.h,
+                            child: SvgPicture.asset(
+                              "assets/icons/notification_icon.svg",
+                              width: 25.h,
+                              height: 25.h,
+                            ),
                           ),
-                        ),
-                      ],
+                          Positioned(
+                            right: 5.w,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFF9472F),
+                                  borderRadius: BorderRadius.circular(6.25.h)),
+                              height: 12.5.h,
+                              width: 12.5.h,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ))

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thumbs_app/custom_extentions.dart';
+import 'package:thumbs_app/models/employee_model.dart';
 import 'package:thumbs_app/models/post_privacy_model.dart';
 import 'package:thumbs_app/models/select_point_amount_model.dart';
 import 'package:thumbs_app/models/tag_model.dart';
 import 'package:thumbs_app/shared_widgets/post_privacy.dart';
+import 'package:thumbs_app/shared_widgets/select_employee_bottom_sheet.dart';
 import 'package:thumbs_app/shared_widgets/select_point_amount.dart';
 import 'package:thumbs_app/utils/max_char_input_formater.dart';
 
@@ -59,6 +61,8 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
           colors: [Color(0xFF3FAE36), Color(0xFF2C7A26)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter));
+
+  List<EmployeeModel> employees = [];
 
   @override
   void initState() {
@@ -136,6 +140,7 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
           )),
       body: SafeArea(
           child: ListView(
+        padding: EdgeInsets.zero,
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(15.w, 15.h, 15.w, 0),
@@ -454,51 +459,39 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
                             ),
                           ),
                         ),
-                        Text(
-                          "Add ",
-                          style: TextStyle(
-                              fontSize: 14.fs,
-                              fontWeight: FontWeight.w500,
-                              color: const Color(0xFFB3005E)),
+                        GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                backgroundColor: Colors.transparent,
+                                isDismissible: true,
+                                isScrollControlled: true,
+                                context: context,
+                                builder: (context) => SelectEmployeeBottomSheet(
+                                      currentList: employees,
+                                    )).then((value) {
+                              if (value != null) {
+                                setState(() {
+                                  employees = value;
+                                });
+                              }
+                            });
+                          },
+                          child: Text(
+                            "Add ",
+                            style: TextStyle(
+                                fontSize: 14.fs,
+                                fontWeight: FontWeight.w500,
+                                color: const Color(0xFFB3005E)),
+                          ),
                         ),
                         Icon(Icons.arrow_forward_ios_rounded,
                             color: const Color(0xFFB3005E), size: 15.h)
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 55.h,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.center,
-                          child: Text(
-                            "No employee has been selected",
-                            style: TextStyle(
-                                fontSize: 15.fs,
-                                fontWeight: FontWeight.w700,
-                                color: const Color(0xFF505F79)),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 3.h,
-                        ),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Select one or more employees that needs to be awarded",
-                            style: TextStyle(
-                                fontSize: 12.fs,
-                                fontWeight: FontWeight.w400,
-                                color: const Color(0xFF7A8699)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                  employees.isEmpty
+                      ? _buildNoEmployeeView()
+                      : _buildEmployeeView()
                 ],
               ),
             ),
@@ -666,6 +659,128 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
           ),
         ],
       )),
+    );
+  }
+
+  _buildNoEmployeeView() {
+    return SizedBox(
+      height: 55.h,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+            child: Text(
+              "No employee has been selected",
+              style: TextStyle(
+                  fontSize: 15.fs,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF505F79)),
+            ),
+          ),
+          SizedBox(
+            height: 3.h,
+          ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: Alignment.center,
+            child: Text(
+              "Select one or more employees that needs to be awarded",
+              style: TextStyle(
+                  fontSize: 12.fs,
+                  fontWeight: FontWeight.w400,
+                  color: const Color(0xFF7A8699)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildEmployeeView() {
+    return SizedBox(
+      height: 50.h,
+      child: Row(
+        children: [
+          if (employees.length == 1) _employeeProPic(employees[0].image),
+          if (employees.length > 1)
+            SizedBox(
+              height: 40.h,
+              width: 55.h,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: 15.h,
+                    child: _employeeProPic(employees[1].image),
+                  ),
+                  _employeeProPic(employees[0].image),
+                ],
+              ),
+            ),
+          SizedBox(
+            width: 12.w,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  employees[0].name,
+                  style: TextStyle(
+                      fontSize: 14.fs,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF15294B)),
+                ),
+              ),
+              if (employees.length == 1)
+                Text(
+                  employees[0].des,
+                  style: TextStyle(
+                      fontSize: 12.fs,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF505F79)),
+                  textAlign: TextAlign.left,
+                ),
+              if (employees.length > 1)
+                RichText(
+                  text: TextSpan(
+                      text: "and ",
+                      style: TextStyle(
+                          fontSize: 12.fs,
+                          color: const Color(0xFF505F79),
+                          fontWeight: FontWeight.w400),
+                      children: [
+                        TextSpan(
+                          text: "${employees.length - 1} Other",
+                          style: TextStyle(
+                              fontSize: 12.fs,
+                              decoration: TextDecoration.underline,
+                              color: const Color(0xFF15294B),
+                              fontWeight: FontWeight.w700),
+                        )
+                      ]),
+                ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  _employeeProPic(String image) {
+    return Container(
+      height: 40.h,
+      width: 40.h,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle, border: Border.all(color: Colors.white)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20.h),
+        child: Image.asset(image, height: 40.h, width: 40.h, fit: BoxFit.fill),
+      ),
     );
   }
 }

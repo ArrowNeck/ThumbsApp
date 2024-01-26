@@ -82,6 +82,38 @@ class _RankingFilterState extends State<RankingFilter> {
             ),
           ),
           ...filterList.map((privacy) => _buildTile(privacy)),
+          Padding(
+            padding: EdgeInsets.fromLTRB(15.w, 10.h, 15.w, 5.h),
+            child: GestureDetector(
+              onTap: () {
+                // showModalBottomSheet(
+                //     backgroundColor: Colors.transparent,
+                //     isDismissible: true,
+                //     isScrollControlled: true,
+                //     context: context,
+                //     builder: (context) => );
+                Navigator.pop(context);
+              },
+              child: Container(
+                height: 45.h,
+                width: 400.w,
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFB3005E),
+                  borderRadius: BorderRadius.circular(8.h),
+                ),
+                child: Text(
+                  "Done",
+                  style: TextStyle(
+                      fontSize: 16.fs,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          )
         ],
       )),
     );
