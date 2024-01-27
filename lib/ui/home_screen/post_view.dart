@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thumbs_app/custom_extentions.dart';
+import 'package:thumbs_app/shared_widgets/comment_bottom_sheet.dart';
 import 'package:thumbs_app/shared_widgets/post_with_permission_bottom_sheet.dart';
 
 class PostView extends StatefulWidget {
@@ -288,25 +289,35 @@ class _PostViewState extends State<PostView> {
             ],
           )),
           Expanded(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                "assets/icons/comment_icon.svg",
-                width: 20.h,
-                height: 20.h,
-              ),
-              SizedBox(
-                width: 8.w,
-              ),
-              Text(
-                "Comment",
-                style: TextStyle(
-                    fontSize: 15.fs,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF505F79)),
-              ),
-            ],
+              child: GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  isDismissible: true,
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => const CommentsBottomSheet());
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  "assets/icons/comment_icon.svg",
+                  width: 20.h,
+                  height: 20.h,
+                ),
+                SizedBox(
+                  width: 8.w,
+                ),
+                Text(
+                  "Comment",
+                  style: TextStyle(
+                      fontSize: 15.fs,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF505F79)),
+                ),
+              ],
+            ),
           )),
         ],
       ),
