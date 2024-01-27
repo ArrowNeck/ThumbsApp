@@ -26,11 +26,13 @@ class GradientProgressBar extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               gradient: gradient,
-              borderRadius: !curveless
-                  ? BorderRadius.all(Radius.circular(5.h))
-                  : BorderRadius.only(
-                      bottomRight: Radius.circular(5.h),
-                      topRight: Radius.circular(5.h)),
+              borderRadius: curveless
+                  ? percent == 100
+                      ? null
+                      : BorderRadius.only(
+                          bottomRight: Radius.circular(5.h),
+                          topRight: Radius.circular(5.h))
+                  : BorderRadius.all(Radius.circular(5.h)),
             ),
             child: SizedBox(height: 10.h),
           ),
