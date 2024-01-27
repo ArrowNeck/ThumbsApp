@@ -17,6 +17,40 @@ extension Ex on num {
       : (double.parse(toString()).h * 1.15);
 }
 
+extension BadgeName on BadgeType {
+  String name() {
+    switch (this) {
+      case BadgeType.bronze:
+        return "Bronze";
+      case BadgeType.silver:
+        return "Silver";
+      case BadgeType.gold:
+        return "Gold";
+      case BadgeType.platinum:
+        return "Platinum";
+      default:
+        return "Bronze";
+    }
+  }
+}
+
+extension NextBadgeName on BadgeType {
+  String nextBadge() {
+    switch (this) {
+      case BadgeType.bronze:
+        return "Silver";
+      case BadgeType.silver:
+        return "Gold";
+      case BadgeType.gold:
+        return "Platinum";
+      case BadgeType.platinum:
+        return "Platinum";
+      default:
+        return "Bronze";
+    }
+  }
+}
+
 extension BadgeColor on BadgeType {
   Color color() {
     switch (this) {
@@ -29,7 +63,24 @@ extension BadgeColor on BadgeType {
       case BadgeType.platinum:
         return AppColors.platinum;
       default:
-        return Colors.white;
+        return AppColors.bronze;
+    }
+  }
+}
+
+extension BadgeNameColor on BadgeType {
+  Color naemColor() {
+    switch (this) {
+      case BadgeType.bronze:
+        return const Color(0xFFB07147);
+      case BadgeType.silver:
+        return const Color(0xFF5E5E5E);
+      case BadgeType.gold:
+        return const Color(0xFF947506);
+      case BadgeType.platinum:
+        return const Color(0xFF4F6188);
+      default:
+        return const Color(0xFFB07147);
     }
   }
 }
@@ -46,7 +97,24 @@ extension BadgeIcon on BadgeType {
       case BadgeType.platinum:
         return "badge_platinum.svg";
       default:
-        return "";
+        return "badge_bronze.svg";
+    }
+  }
+}
+
+extension BadgeBackground on BadgeType {
+  String bg() {
+    switch (this) {
+      case BadgeType.bronze:
+        return "rank_card_bg_bronze.svg";
+      case BadgeType.silver:
+        return "rank_card_bg_silver.svg";
+      case BadgeType.gold:
+        return "rank_card_bg_gold.svg";
+      case BadgeType.platinum:
+        return "rank_card_bg_platinum.svg";
+      default:
+        return "rank_card_bg_bronze.svg";
     }
   }
 }

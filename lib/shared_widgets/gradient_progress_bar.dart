@@ -6,11 +6,13 @@ class GradientProgressBar extends StatelessWidget {
   final int percent;
   final LinearGradient gradient;
   final Color backgroundColor;
+  final bool curveless;
 
   const GradientProgressBar(
       {required this.percent,
       required this.gradient,
       required this.backgroundColor,
+      this.curveless = false,
       Key? key})
       : super(key: key);
 
@@ -23,8 +25,13 @@ class GradientProgressBar extends StatelessWidget {
           fit: FlexFit.tight,
           child: Container(
             decoration: BoxDecoration(
-                gradient: gradient,
-                borderRadius: BorderRadius.all(Radius.circular(5.h))),
+              gradient: gradient,
+              borderRadius: !curveless
+                  ? BorderRadius.all(Radius.circular(5.h))
+                  : BorderRadius.only(
+                      bottomRight: Radius.circular(5.h),
+                      topRight: Radius.circular(5.h)),
+            ),
             child: SizedBox(height: 10.h),
           ),
         ),
@@ -34,11 +41,13 @@ class GradientProgressBar extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: backgroundColor,
-              borderRadius: percent == 0
-                  ? BorderRadius.all(Radius.circular(5.h))
-                  : BorderRadius.only(
-                      bottomRight: Radius.circular(5.h),
-                      topRight: Radius.circular(5.h)),
+              borderRadius: curveless
+                  ? null
+                  : percent == 0
+                      ? BorderRadius.all(Radius.circular(5.h))
+                      : BorderRadius.only(
+                          bottomRight: Radius.circular(5.h),
+                          topRight: Radius.circular(5.h)),
             ),
             child: SizedBox(height: 10.h),
           ),
