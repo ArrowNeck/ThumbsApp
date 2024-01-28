@@ -52,7 +52,7 @@ extension BadgeIcon on BadgeType {
   String icon() {
     switch (this) {
       case BadgeType.kudos:
-        return "assets/icons/hand_metal.svg";
+        return "assets/icons/party_popper.svg";
       case BadgeType.rockstar:
         return "assets/icons/hand_metal.svg";
       case BadgeType.epic:
@@ -60,7 +60,7 @@ extension BadgeIcon on BadgeType {
       case BadgeType.legend:
         return "assets/icons/rocket.svg";
       default:
-        return "assets/icons/hand_metal.svg";
+        return "assets/icons/party_popper.svg";
     }
   }
 }

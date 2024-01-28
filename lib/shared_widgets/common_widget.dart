@@ -34,6 +34,7 @@ class CommonWidgets {
           child: Divider(
             color: const Color(0xFFDFE2E6),
             thickness: 1.h,
+            height: 1.h,
           ),
         ));
   }

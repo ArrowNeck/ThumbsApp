@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thumbs_app/custom_extentions.dart';
 import 'package:thumbs_app/enums/badge_type.dart';
+import 'package:thumbs_app/main.dart';
 import 'package:thumbs_app/models/employee_model.dart';
 import 'package:thumbs_app/models/post_privacy_model.dart';
 import 'package:thumbs_app/models/tag_model.dart';
@@ -10,6 +11,7 @@ import 'package:thumbs_app/shared_widgets/post_privacy.dart';
 import 'package:thumbs_app/shared_widgets/select_employee_bottom_sheet.dart';
 import 'package:thumbs_app/shared_widgets/select_point_amount.dart';
 import 'package:thumbs_app/utils/max_char_input_formater.dart';
+import 'package:thumbs_app/utils/toast_message.dart';
 
 class CreateAndEditThumb extends StatefulWidget {
   const CreateAndEditThumb({super.key});
@@ -178,6 +180,11 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
                               setState(() {
                                 postPrivacyModel = value;
                               });
+                              rootScaffoldMessengerKey.currentState
+                                  ?.showSnackBar(toast(
+                                      type: ToastType.success,
+                                      message:
+                                          "Post privacy changed to ${postPrivacyModel.title.toLowerCase()}"));
                             }
                           });
                         },
