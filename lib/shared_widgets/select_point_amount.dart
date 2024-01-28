@@ -2,61 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thumbs_app/custom_extentions.dart';
-import 'package:thumbs_app/models/select_point_amount_model.dart';
+import 'package:thumbs_app/enums/badge_type.dart';
 
 class SelectPonitAmount extends StatefulWidget {
-  final int? currentSelectionId;
-  const SelectPonitAmount({super.key, this.currentSelectionId});
+  final BadgeType? currentBadge;
+  const SelectPonitAmount({super.key, this.currentBadge});
 
   @override
   State<SelectPonitAmount> createState() => _SelectPonitAmountState();
 }
 
 class _SelectPonitAmountState extends State<SelectPonitAmount> {
-  List<SelectPointAmountModel> pointAmounts = [];
-  late int selectedId;
+  List<BadgeType> badges = [
+    BadgeType.kudos,
+    BadgeType.rockstar,
+    BadgeType.epic,
+    BadgeType.legend
+  ];
+  BadgeType? badge;
   int availablePonits = 780;
   @override
   void initState() {
-    selectedId = widget.currentSelectionId ?? 0;
-    pointAmounts = [
-      SelectPointAmountModel(
-          id: 1,
-          name: "Kudos",
-          value: 100,
-          icon: "assets/icons/party_popper.svg",
-          colors: const LinearGradient(
-              colors: [Color(0xFF3FAE36), Color(0xFF2C7A26)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)),
-      SelectPointAmountModel(
-          id: 2,
-          name: "Rockstar",
-          value: 200,
-          icon: "assets/icons/hand_metal.svg",
-          colors: const LinearGradient(
-              colors: [Color(0xFFF9472F), Color(0xFFAE3221)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)),
-      SelectPointAmountModel(
-          id: 3,
-          name: "Epic",
-          value: 500,
-          icon: "assets/icons/trophy.svg",
-          colors: const LinearGradient(
-              colors: [Color(0xFFFEC219), Color(0xFF8A712A)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)),
-      SelectPointAmountModel(
-          id: 4,
-          name: "Legend",
-          value: 1000,
-          icon: "assets/icons/rocket.svg",
-          colors: const LinearGradient(
-              colors: [Color(0xFF7A8699), Color(0xFF15294B)],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter)),
-    ];
+    badge = widget.currentBadge;
     super.initState();
   }
 
@@ -77,7 +44,7 @@ class _SelectPonitAmountState extends State<SelectPonitAmount> {
           Padding(
             padding: EdgeInsets.only(top: 7.5.h, bottom: 5.h),
             child: GestureDetector(
-              onTap: () => Navigator.pop(context, pointAmounts[--selectedId]),
+              onTap: () => Navigator.pop(context, badge),
               child: Container(
                 width: 36.h,
                 height: 5.h,
@@ -101,8 +68,7 @@ class _SelectPonitAmountState extends State<SelectPonitAmount> {
                       color: const Color(0xFF15294B)),
                 ),
                 GestureDetector(
-                  onTap: () =>
-                      Navigator.pop(context, pointAmounts[--selectedId]),
+                  onTap: () => Navigator.pop(context, badge),
                   child: Container(
                     width: 30.h,
                     height: 30.h,
@@ -158,12 +124,12 @@ class _SelectPonitAmountState extends State<SelectPonitAmount> {
             shrinkWrap: true,
             childAspectRatio: 1.9,
             children: [
-              ...pointAmounts.map(
-                (point) => GestureDetector(
+              ...badges.map(
+                (item) => GestureDetector(
                   onTap: () {
-                    if (availablePonits >= point.value) {
+                    if (availablePonits >= item.point()) {
                       setState(() {
-                        selectedId = point.id;
+                        badge = item;
                       });
                     }
                   },
@@ -173,44 +139,44 @@ class _SelectPonitAmountState extends State<SelectPonitAmount> {
                     padding:
                         EdgeInsets.symmetric(vertical: 8.h, horizontal: 4.w),
                     decoration: BoxDecoration(
-                        color: (availablePonits < point.value)
+                        color: (availablePonits < item.point())
                             ? const Color(0xFFDFE2E6)
-                            : selectedId == point.id
+                            : badge == item
                                 ? const Color(0xFFFFEBEE) //
                                 : Colors.white,
                         border: Border.all(
-                            color: (selectedId == point.id)
+                            color: (badge == item)
                                 ? const Color(0xFFB3005E)
                                 : const Color(0xFFDFE2E6)),
                         borderRadius: BorderRadius.circular(10.h)),
                     child: Column(
                       children: [
                         SvgPicture.asset(
-                          point.icon,
+                          item.icon(),
                           width: 30.h,
                           height: 30.h,
                           colorFilter: ColorFilter.mode(
-                              (selectedId == point.id)
+                              (badge == item)
                                   ? const Color(0xFFB3005E)
                                   : const Color(0xFF7A8699),
                               BlendMode.srcIn),
                         ),
                         const Spacer(),
                         Text(
-                          "${point.value}P",
+                          "${item.point()}P",
                           style: TextStyle(
                               fontSize: 20.fs,
                               fontWeight: FontWeight.w700,
-                              color: (availablePonits < point.value)
+                              color: (availablePonits < item.point())
                                   ? const Color(0xFF7A8699)
                                   : const Color(0xFF15294B)),
                         ),
                         Text(
-                          point.name,
+                          item.name(),
                           style: TextStyle(
                               fontSize: 15.fs,
                               fontWeight: FontWeight.w700,
-                              color: (availablePonits < point.value)
+                              color: (availablePonits < item.point())
                                   ? const Color(0xFF7A8699)
                                   : const Color(0xFF505F79)),
                         ),

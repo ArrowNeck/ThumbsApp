@@ -24,7 +24,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
     CommentModel(
         name: "Bessie Cooper",
         message:
-            "It is very much joyful to work with you all these years Deepak Anderson.   Happy Work Anniversary!!!",
+            "It is very much joyful to work with you all these years Deepak Anderson. Happy Work Anniversary!!!",
         pic: "BC.png"),
   ];
 

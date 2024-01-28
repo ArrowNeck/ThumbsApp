@@ -1,1 +1,1 @@
-enum BadgeType { platinum, gold, silver, bronze }
+enum BadgeType { kudos, rockstar, epic, legend }

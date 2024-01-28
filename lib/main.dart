@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thumbs_app/splash_screen.dart';
 
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 // void main() {
 //   runApp(const ThumbsApp());
 // }
@@ -34,6 +37,7 @@ class ThumbsApp extends StatelessWidget {
           locale: DevicePreview.locale(context),
           builder: DevicePreview.appBuilder,
           debugShowCheckedModeBanner: false,
+          scaffoldMessengerKey: rootScaffoldMessengerKey,
           title: 'Thumbs App',
           // You can use the library anywhere in the app even in theme
           theme: ThemeData(

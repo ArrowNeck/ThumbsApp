@@ -184,6 +184,9 @@ class _BaseNavbarState extends State<BaseNavbar> {
                     //     context,
                     //     MaterialPageRoute(
                     //         builder: (_) => const RedeemHistory()));
+                    // rootScaffoldMessengerKey.currentState?.showSnackBar(toast(
+                    //     type: ToastType.success,
+                    //     message: "Toast description goes here"));
                   },
                   child: Container(
                     width: 68.w,

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thumbs_app/custom_extentions.dart';
+import 'package:thumbs_app/enums/badge_type.dart';
 import 'package:thumbs_app/models/employee_model.dart';
 import 'package:thumbs_app/models/post_privacy_model.dart';
-import 'package:thumbs_app/models/select_point_amount_model.dart';
 import 'package:thumbs_app/models/tag_model.dart';
 import 'package:thumbs_app/shared_widgets/post_privacy.dart';
 import 'package:thumbs_app/shared_widgets/select_employee_bottom_sheet.dart';
@@ -52,15 +52,7 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
       subtitle: "Whole organisation can see the post",
       description: "Public");
 
-  SelectPointAmountModel pointAwarded = SelectPointAmountModel(
-      id: 1,
-      name: "Kudos",
-      value: 100,
-      icon: "assets/icons/party_popper.svg",
-      colors: const LinearGradient(
-          colors: [Color(0xFF3FAE36), Color(0xFF2C7A26)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter));
+  BadgeType badge = BadgeType.kudos;
 
   List<EmployeeModel> employees = [];
 
@@ -350,9 +342,9 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(22.5.h),
-                              gradient: pointAwarded.colors),
+                              gradient: badge.gradient()),
                           child: SvgPicture.asset(
-                            pointAwarded.icon,
+                            badge.icon(),
                             width: 22.5.h,
                             height: 22.5.h,
                             colorFilter: const ColorFilter.mode(
@@ -371,7 +363,7 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
                               fit: BoxFit.scaleDown,
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                "${pointAwarded.value}P",
+                                "${badge.point()}P",
                                 style: TextStyle(
                                     fontSize: 18.fs,
                                     fontWeight: FontWeight.w600,
@@ -382,7 +374,7 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
                               fit: BoxFit.scaleDown,
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                pointAwarded.name,
+                                badge.name(),
                                 style: TextStyle(
                                     fontSize: 14.fs,
                                     fontWeight: FontWeight.w400,
@@ -401,11 +393,11 @@ class _CreateAndEditThumbState extends State<CreateAndEditThumb> {
                                 isDismissible: true,
                                 context: context,
                                 builder: (context) => SelectPonitAmount(
-                                      currentSelectionId: pointAwarded.id,
+                                      currentBadge: badge,
                                     )).then((value) {
                               if (value != null) {
                                 setState(() {
-                                  pointAwarded = value;
+                                  badge = value;
                                 });
                               }
                             });

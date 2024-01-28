@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thumbs_app/custom_extentions.dart';
-import 'package:thumbs_app/enums/badge_type.dart';
+import 'package:thumbs_app/enums/rank_type.dart';
 import 'package:thumbs_app/shared_widgets/ranking_filter_bottom_sheet.dart';
 
 class RankingsScreen extends StatefulWidget {
@@ -89,10 +89,10 @@ class _RankingsScreenState extends State<RankingsScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _buildSmallHeaderLayout(
-                    2, "James\nTallman", "118,230P", BadgeType.platinum),
+                    2, "James\nTallman", "118,230P", RankType.platinum),
                 _buildFirstRankLayout(),
                 _buildSmallHeaderLayout(
-                    3, "Rochelle\nFreeman", "90,220P", BadgeType.gold),
+                    3, "Rochelle\nFreeman", "90,220P", RankType.gold),
               ],
             ),
           ),
@@ -123,8 +123,8 @@ class _RankingsScreenState extends State<RankingsScreen> {
             ),
             _buildHeaderImageFrameLayout(
                 imageFrameSize: 110.h,
-                badgeFrameSize: 35.h,
-                badgeType: BadgeType.platinum,
+                rankFrameSize: 35.h,
+                rankType: RankType.platinum,
                 isFirst: true),
             _buildHeaderPersonName("Cameroon\nJacob"),
             _buildHeaderPointsView("128,000P")
@@ -134,8 +134,8 @@ class _RankingsScreenState extends State<RankingsScreen> {
 
   _buildHeaderImageFrameLayout(
       {required double imageFrameSize,
-      required double badgeFrameSize,
-      required BadgeType badgeType,
+      required double rankFrameSize,
+      required RankType rankType,
       bool isFirst = false}) {
     return Stack(
       children: [
@@ -168,18 +168,18 @@ class _RankingsScreenState extends State<RankingsScreen> {
           bottom: 0,
           right: 0,
           child: Container(
-            height: badgeFrameSize,
-            width: badgeFrameSize,
+            height: rankFrameSize,
+            width: rankFrameSize,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
-              border: Border.all(color: badgeType.color(), width: 2.h),
+              border: Border.all(color: rankType.color(), width: 2.h),
             ),
             child: SvgPicture.asset(
-              "assets/icons/${badgeType.icon()}",
-              width: badgeFrameSize - 12.h,
-              height: badgeFrameSize - 12.h,
+              rankType.icon(),
+              width: rankFrameSize - 12.h,
+              height: rankFrameSize - 12.h,
               alignment: Alignment.center,
             ),
           ),
@@ -189,14 +189,14 @@ class _RankingsScreenState extends State<RankingsScreen> {
   }
 
   _buildSmallHeaderLayout(
-      int rank, String name, String points, BadgeType badgeType) {
+      int rank, String name, String points, RankType rankType) {
     return Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           _buildRankLabel(rank),
           _buildHeaderImageFrameLayout(
-              imageFrameSize: 75.h, badgeFrameSize: 30.h, badgeType: badgeType),
+              imageFrameSize: 75.h, rankFrameSize: 30.h, rankType: rankType),
           _buildHeaderPersonName(name),
           _buildHeaderPointsView(points)
         ]);

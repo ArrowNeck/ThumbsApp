@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thumbs_app/custom_extentions.dart';
-import 'package:thumbs_app/enums/badge_type.dart';
+import 'package:thumbs_app/enums/rank_type.dart';
 import 'package:thumbs_app/shared_widgets/common_widget.dart';
 import 'package:thumbs_app/shared_widgets/gradient_progress_bar.dart';
 
@@ -29,7 +29,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
         children: [
           _buildLabel("Your Points & Level"),
-          _buildRankingCard(BadgeType.bronze, 2401, 2348),
+          _buildRankingCard(RankType.bronze, 2401, 2348),
           _buildLabel("Points Level Details"),
           _buildPointLevelDetails(),
           _buildLabel("How it Works"),
@@ -54,10 +54,10 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildPointLevelBadgeCell(BadgeType.bronze, 0),
-                _buildPointLevelBadgeCell(BadgeType.silver, 10000),
-                _buildPointLevelBadgeCell(BadgeType.gold, 20000),
-                _buildPointLevelBadgeCell(BadgeType.platinum, 50000),
+                _buildPointLevelBadgeCell(RankType.bronze, 0),
+                _buildPointLevelBadgeCell(RankType.silver, 10000),
+                _buildPointLevelBadgeCell(RankType.gold, 20000),
+                _buildPointLevelBadgeCell(RankType.platinum, 50000),
               ],
             ),
             _buildPointLevelStepper(),
@@ -143,7 +143,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
     );
   }
 
-  _buildPointLevelBadgeCell(BadgeType type, int pts) {
+  _buildPointLevelBadgeCell(RankType type, int pts) {
     return SizedBox(
       height: 115.h,
       width: 65.h,
@@ -171,7 +171,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
                 ],
               ),
               child: SvgPicture.asset(
-                "assets/icons/${type.icon()}",
+                type.icon(),
                 height: 48.h,
                 width: 36.h,
                 fit: BoxFit.fill,
@@ -208,7 +208,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
     );
   }
 
-  _buildRankingCard(BadgeType type, int points, int earnMore) {
+  _buildRankingCard(RankType type, int points, int earnMore) {
     return Padding(
       padding: EdgeInsets.only(bottom: 40.h),
       child: Container(
@@ -222,7 +222,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(10.h),
               child: SvgPicture.asset(
-                "assets/icons/${type.bg()}",
+                type.bg(),
                 height: 140.h,
                 width: 400.w,
                 fit: BoxFit.fill,
@@ -262,7 +262,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
                         ),
                         RichText(
                           text: TextSpan(
-                              text: type == BadgeType.platinum
+                              text: type == RankType.platinum
                                   ? "Congrats! You are on "
                                   : "Earn $earnMore points to reach ",
                               style: TextStyle(
@@ -271,13 +271,13 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
                                   fontWeight: FontWeight.w500),
                               children: [
                                 TextSpan(
-                                  text: type.nextBadge().toUpperCase(),
+                                  text: type.nextRank().toUpperCase(),
                                   style: TextStyle(
                                       fontSize: 13.fs,
                                       color: const Color(0xFF15294B),
                                       fontWeight: FontWeight.w700),
                                 ),
-                                if (type == BadgeType.platinum)
+                                if (type == RankType.platinum)
                                   TextSpan(
                                     text:
                                         " level! Exciting perks awaits for you",
@@ -301,7 +301,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                          "assets/icons/${type.icon()}",
+                          type.icon(),
                           height: 20.h,
                           width: 16.w,
                           fit: BoxFit.fill,
@@ -317,7 +317,7 @@ class _YourPointsScreenState extends State<YourPointsScreen> {
                             style: TextStyle(
                                 fontSize: 15.fs,
                                 fontWeight: FontWeight.w700,
-                                color: type.naemColor()),
+                                color: type.rankNameColor()),
                           ),
                         )
                       ],
